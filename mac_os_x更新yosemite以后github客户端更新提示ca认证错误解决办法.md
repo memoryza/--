@@ -4,7 +4,7 @@
 -------
    最近手贱更新了mac os yosemite的系统版本，更新以后发现部分软件无法使用，例如php 扩展的redis模块，mou，eclipse等等，甚是郁闷啊。对于图形化的软件还好说去官网更新一下新版本，但对于服务类的真是让人头疼，赶巧今天用github客户端更新代码的时候提示
    
-   <img src="./img/ca_error.png"/>
+   <img src="./img/ca-error.png"/>
    
    看起来好熟ca证书加载失败，因为github是基于https的，没有ca证书没办法做提交、更新等操作。电脑上刚安装github的时候特意搞过，但是升完级为什么就没有了呢，命令行切换到存放证书的目录
   
