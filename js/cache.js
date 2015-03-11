@@ -6,31 +6,29 @@
  	var exports = {};
  	var win = window;
  	var storage = win.localStorage;
-	//判断是否支持localstorage
+	// 判断是否支持localstorage
  	function isLocalStorageNameSupported() {
-	    try {
-	        var supported = ('localStorage' in win && storage);
-	        if (supported) {
-	        	//精确检测，防止我们自己cache大于storage的上限以后
-		        var tempKey = storage.key(0);
-		        var tempData = storage.getItem(tempKey);
-		        if(tempKey) {
-		        	storage.removeItem(tempKey);
-		        	storage.setItem(tempKey, tempData);
-		        } else {
-		        	//测试
-		        	storage.setItem("__storage__", "");
-		        	storage.removeItem( "__storage__" );
-		        }
-	        }
-	       return supported;
-	    } catch(err) { 
-	    	throw err;
-	    	return false;
-	    }
+    try {
+      var supported = ('localStorage' in win && storage);
+      if (supported) {
+      	// 精确检测，防止我们自己cache大于storage的上限以后
+        var tempKey = storage.key(0);
+        var tempData = storage.getItem(tempKey);
+        if(tempKey) {
+        	storage.removeItem(tempKey);
+        	storage.setItem(tempKey, tempData);
+        } else {
+        	storage.setItem("__storage__", "");
+        	storage.removeItem( "__storage__" );
+        }
+      }
+     return supported;
+    } catch(err) { 
+    	return false;
+    }
 	}
 	exports.set = function (key, val) {};
-	exports.get = function (key, defaultVal) {};
+	exports.get = function (key, defaultVal) { return defaultVal; };
 	exports.remove = function (key) {};
 	exports.clear = function () {};
 	exports.some =  function (match) {};
@@ -55,7 +53,9 @@
 			if ( val === undefined ) { 
 				return store.remove(key);
 			}
-			storage.setItem(key, exports.serialize(val));
+		try {
+				storage.setItem(key, exports.serialize(val));
+			} catch (e) {}
 			return val;
 	 	}
 	 	exports.get = function (key, defaultVal) {
