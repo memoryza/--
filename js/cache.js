@@ -1,55 +1,54 @@
 /**
- * @author wangjincai(wangjincai@baidu.com)
+ * @author wangjincai(jincai.wang@foxmail.com)
  **/
 
  define('cache', [], function() {
- 	var exports = {};
- 	var win = window;
- 	var storage = win.localStorage;
+	var win = window;
+	var storage = win.localStorage;
 	// 判断是否支持localstorage
- 	function isLocalStorageNameSupported() {
-    try {
-      var supported = ('localStorage' in win && storage);
-      if (supported) {
-      	// 精确检测，防止我们自己cache大于storage的上限以后
-        var tempKey = storage.key(0);
-        var tempData = storage.getItem(tempKey);
-        if(tempKey) {
-        	storage.removeItem(tempKey);
-        	storage.setItem(tempKey, tempData);
-        } else {
-        	storage.setItem("__storage__", "");
-        	storage.removeItem( "__storage__" );
-        }
-      }
-     return supported;
-    } catch(err) { 
-    	return false;
-    }
+	function isLocalStorageNameSupported() {
+	    try {
+	        var supported = ('localStorage' in win && storage);
+	        if (supported) {
+	        	// 精确检测，防止我们自己cache大于storage的上限以后
+	            var tempKey = storage.key(0);
+	            var tempData = storage.getItem(tempKey);
+	            if(tempKey) {
+	            	storage.removeItem(tempKey);
+	            	storage.setItem(tempKey, tempData);
+	            } else {
+	            	storage.setItem("__storage__", "");
+	            	storage.removeItem( "__storage__" );
+	            }
+	        }
+	        return supported;
+	    } catch(err) {
+	    	return false;
+	    }
 	}
 	exports.set = function (key, val) {};
 	exports.get = function (key, defaultVal) { return defaultVal; };
 	exports.remove = function (key) {};
 	exports.clear = function () {};
-	exports.some =  function (match) {};
-	exports.getItems = function (keys) {};
-	exports.getAllkeys =  function () {};
- 	exports.serialize = function (val) {
- 		return JSON.stringify( val );
- 	}
- 	exports.deserialize = function (val) {
- 		if (typeof val != 'string') { 
- 			return undefined;
- 		}
+	exports.some =  function (match) { return [];};
+	exports.getItems = function (keys) { return {};};
+	exports.getAllkeys =  function () { return [];};
+		exports.serialize = function (val) {
+			return JSON.stringify( val );
+		}
+		exports.deserialize = function (val) {
+			if (typeof val != 'string') { 
+				return undefined;
+			}
 		try { 
 			return JSON.parse(val);
 		} catch(e) { 
 			return val || undefined;
 		}
- 	}
- 	exports.supported = isLocalStorageNameSupported();
- 	if(exports.supported) {
- 		exports.set = function (key, val) {
+		}
+		exports.supported = isLocalStorageNameSupported();
+		if(exports.supported) {
+			exports.set = function (key, val) {
 			if ( val === undefined ) { 
 				return store.remove(key);
 			}
@@ -97,6 +96,5 @@
 	 		}
 	 		return keys;
 	 	}
- 	}
- 	return exports;
+	}
  });
