@@ -4,7 +4,7 @@
 
 	network ->  save as ... [1]
 			 -> Save all as HAR with content [2]
-   memory -> heap snapshots -> item (save) [3]
+    memory -> heap snapshots -> item (save) [3]
    
 ![save示意](./imgs/save_action.png)
 

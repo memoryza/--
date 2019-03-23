@@ -14,6 +14,6 @@
     向全局抛出InspectorFrontendHost 对象（new Host.InspectorFrontendHostStub()）
 ##Host.InspectorFrontendHostStub类
 	constructor中定义keydown 当按按下Ctrl+/Ctrl-  的时候阻止冒泡，实例方法包含获取平台、devtools右键save相关，判断被调试的页面时候在前台，以及更改tab标题、copy文本、新开窗口以及需要保存到ls相关操作的函数，当然也包含一些空方法和写死返回的方法，不一一说明了，具体方法名称
-![类结构]()
+![类结构](./imgs/Host.InspectorFrontendHostStub.png)
     
     
