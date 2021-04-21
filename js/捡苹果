@@ -1,0 +1,49 @@
+function getMaxValue(arr, k, n) {
+  const len = arr.length;
+  if (k + n > len) return -1;
+  let kArr = [];
+  let nArr = [];
+  for (let i = 0; i < len; i++) {
+    if ( (i + k - 1> (len - 1)) && (i + n - 1 > len - 1)) {
+      break;
+    }
+    if (i + k - 1 <= (len - 1)) {
+      kArr.push({
+        val: arr.slice(i, i + k).reduce((prev, curr) => (prev + curr), 0),
+        start: i,
+        end: i + k -1
+      })
+    }
+    if (i + n - 1 <= (len - 1)) {
+      nArr.push({
+        val: arr.slice(i, i + n).reduce((prev, curr) => (prev + curr), 0),
+        start: i,
+        end: i + n -1
+      })
+    }
+  }
+  kArr = kArr.sort((prev, next) => (next.val - prev.val))
+  nArr = nArr.sort((prev, next) => (next.val - prev.val))
+  console.log(kArr, nArr)
+  let maxVal = 0;
+  for (let i = 0; i < kArr.length; i++) {
+    let maxKval = getMaxVal(kArr[i], nArr);
+    if (maxKval.haveMaxVal) {
+      maxVal = Math.max(maxVal,  maxKval.val);
+    }
+  }
+  return maxVal
+}
+
+function getMaxVal (kVal, nArr) {
+  const conditionArr = nArr.filter(item => (item.start > kVal.end || item.end < kVal.start));
+  if (conditionArr.length) {
+    return {
+      haveMaxVal: true,
+      val: kVal.val + conditionArr[0].val
+    }
+  }
+  return {
+    haveMaxVal: false,
+  }
+}
